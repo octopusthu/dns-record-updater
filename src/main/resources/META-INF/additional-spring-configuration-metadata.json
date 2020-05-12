@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "dns-record-updater.cron",
+      "type": "java.lang.String",
+      "description": "Description for dns-record-updater.cron."
+    },
+    {
+      "name": "dns-record-updater.ipinfo-token",
+      "type": "java.lang.String",
+      "description": "Description for dns-record-updater.ipinfo-token."
+    }
+  ] }
