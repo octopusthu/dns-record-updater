@@ -37,6 +37,6 @@ public class DefaultNetworkingServiceImpl implements NetworkingService {
     @Override
     public InetAddress getExternalIp() throws Exception {
         Ifconfig ifconfig = this.fetchIfconfig();
-        return InetAddress.getByName(ifconfig.getIp());
+        return InetAddresses.forString(ifconfig.getIp());
     }
 }
