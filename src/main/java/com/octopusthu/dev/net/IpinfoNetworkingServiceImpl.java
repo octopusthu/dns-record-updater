@@ -4,10 +4,13 @@ import com.octopusthu.dev.thirdparty.ipinfo.IpInfo;
 import io.netty.channel.ChannelOption;
 import org.springframework.core.env.Environment;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 /**
+ *  <a href="https://ipinfo.io">ipinfo.io</a> is blocked in China so this implementation is currently infeasible.
+ *
  * @author ZHANG Yu
  */
 public class IpinfoNetworkingServiceImpl {
@@ -27,6 +30,7 @@ public class IpinfoNetworkingServiceImpl {
                 .build();
 
         this.ipinfoToken = env.getProperty("dns-record-updater.ipinfo-token");
+        Assert.hasText(this.ipinfoToken,"Token must not be empty!");
     }
 
     public IpInfo fetchIpInfo() {

@@ -5,6 +5,7 @@ import com.octopusthu.dev.net.NetworkingService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -17,19 +18,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EnableScheduling
 public class DnsRecordUpdaterApplication {
 
-    private WebClient.Builder webClientBuilder;
+    private final Environment env;
+    private final WebClient.Builder webClientBuilder;
 
     public static void main(String[] args) {
         SpringApplication.run(DnsRecordUpdaterApplication.class, args);
     }
 
-    public DnsRecordUpdaterApplication(WebClient.Builder webClientBuilder) {
+    public DnsRecordUpdaterApplication(Environment env, WebClient.Builder webClientBuilder) {
+        this.env = env;
         this.webClientBuilder = webClientBuilder;
     }
 
     @Bean
     DnsRecordUpdaterTasks dnsRecordUpdaterTasks() {
-        return new DnsRecordUpdaterTasks(networkingService());
+        return new DnsRecordUpdaterTasks(env, networkingService());
     }
 
     @Bean
