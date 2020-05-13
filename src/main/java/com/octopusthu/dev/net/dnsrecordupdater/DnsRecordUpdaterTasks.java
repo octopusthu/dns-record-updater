@@ -1,44 +1,33 @@
 package com.octopusthu.dev.net.dnsrecordupdater;
 
-import com.octopusthu.dev.net.NetworkingService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
-
-import java.net.InetAddress;
-import java.time.Duration;
 
 /**
  * @author ZHANG Yu
  */
 @Slf4j
 public class DnsRecordUpdaterTasks {
+    DnsRecordUpdaterProperties properties;
+    private final DnsRecordUpdaterService service;
 
-    private final Environment env;
-    private final NetworkingService networkingService;
-
-    public DnsRecordUpdaterTasks(Environment env, NetworkingService networkingService) {
-        this.env = env;
-        this.networkingService = networkingService;
+    public DnsRecordUpdaterTasks(DnsRecordUpdaterProperties properties, DnsRecordUpdaterService service) {
+        this.properties = properties;
+        this.service = service;
     }
 
     @Scheduled(cron = "${dns-record-updater.tasks.cron}")
     public void updateDnsRecord() {
-        if (!"true".equals(env.getProperty("dns-record-updater.tasks.enabled"))) {
-            log.info("Scheduled tasks are disabled.");
+        if (!properties.getTasks().isEnabled()) {
+            log.debug("Scheduled tasks are disabled.");
             return;
         }
 
-        InetAddress externalIp;
         try {
-            externalIp = networkingService.getExternalIp().block(Duration.ofSeconds(5));
-            assert externalIp != null;
+            service.updateDnsRecord();
         } catch (Exception e) {
-            log.warn("Cannot get external IP address!", e);
-            return;
+            log.warn("Error updating DNS record!", e);
         }
-        log.info("External IP is: " + externalIp.getHostAddress());
-
     }
 
 }
