@@ -3,6 +3,7 @@ package com.octopusthu.dev.net.dnsrecordupdater;
 import com.octopusthu.dev.net.NetworkingService;
 import com.octopusthu.dev.thirdparty.cloudflare.CloudflareApiResponse;
 import com.octopusthu.dev.thirdparty.cloudflare.CloudflareDnsService;
+import com.octopusthu.dev.thirdparty.cloudflare.CloudflareDnsServiceProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +19,12 @@ import java.net.InetAddress;
 public class DnsRecordUpdaterApiController {
     private final NetworkingService networkingService;
     private final CloudflareDnsService cloudflareDnsService;
+    private final CloudflareDnsServiceProperties cloudflareDnsServiceProperties;
 
-    public DnsRecordUpdaterApiController(NetworkingService networkingService, CloudflareDnsService cloudflareDnsService) {
+    public DnsRecordUpdaterApiController(NetworkingService networkingService, CloudflareDnsService cloudflareDnsService, CloudflareDnsServiceProperties cloudflareDnsServiceProperties) {
         this.networkingService = networkingService;
         this.cloudflareDnsService = cloudflareDnsService;
+        this.cloudflareDnsServiceProperties = cloudflareDnsServiceProperties;
     }
 
     @GetMapping("/api/get-external-ip")
@@ -31,7 +34,10 @@ public class DnsRecordUpdaterApiController {
 
     @GetMapping("/api/dns-record-details")
     public Mono<CloudflareApiResponse> dnsRecordDetails() throws Exception {
-        return cloudflareDnsService.dnsRecordDetails();
+        return cloudflareDnsService.dnsRecordDetails(
+                cloudflareDnsServiceProperties.getBearerToken(),
+                cloudflareDnsServiceProperties.getZoneId(),
+                cloudflareDnsServiceProperties.getRecordId());
     }
 
 }

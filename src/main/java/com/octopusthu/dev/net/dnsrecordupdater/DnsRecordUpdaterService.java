@@ -49,17 +49,19 @@ public class DnsRecordUpdaterService {
           Fetch the old DNS record
          */
 
-        CloudflareApiResponse<?> apiResponse =
-                cloudflareDnsService.dnsRecordDetails()
-                        .block(Duration.ofSeconds(properties.getBlockInSeconds()));
-        Assert.notNull(apiResponse, "apiResponse is null!");
-        Assert.isTrue(apiResponse.isSuccess(), "Response says unsuccessful!");
+        CloudflareApiResponse<?> dnsRecordDetailsWrapper = cloudflareDnsService.dnsRecordDetails(
+                cloudflareDnsServiceProperties.getBearerToken(),
+                cloudflareDnsServiceProperties.getZoneId(),
+                cloudflareDnsServiceProperties.getRecordId())
+                .block(Duration.ofSeconds(properties.getBlockInSeconds()));
+        Assert.notNull(dnsRecordDetailsWrapper, "dnsRecordDetailsWrapper is null!");
+        Assert.isTrue(dnsRecordDetailsWrapper.isSuccess(), "dnsRecordDetailsWrapper says unsuccessful!");
 
         /*
           Make sure the fetched DNS record is what we want
          */
 
-        CloudflareDnsRecordDetailsApiSubResponse dnsRecordDetails = (CloudflareDnsRecordDetailsApiSubResponse) apiResponse.getResult();
+        CloudflareDnsRecordDetailsApiSubResponse dnsRecordDetails = (CloudflareDnsRecordDetailsApiSubResponse) dnsRecordDetailsWrapper.getResult();
         String recordName = dnsRecordDetails.getName();
         Assert.isTrue(
                 recordName.equals(cloudflareDnsServiceProperties.getRecordName()),
@@ -81,10 +83,19 @@ public class DnsRecordUpdaterService {
         /*
           Update DNS record with the new external IP
          */
+        CloudflareApiResponse<?> updateDnsRecordWrapper = cloudflareDnsService.updateDnsRecord(cloudflareDnsServiceProperties.getBearerToken(),
+                cloudflareDnsServiceProperties.getZoneId(),
+                cloudflareDnsServiceProperties.getRecordId(),
+                cloudflareDnsServiceProperties.getRecordType(),
+                cloudflareDnsServiceProperties.getRecordName(),
+                newIp,
+                cloudflareDnsServiceProperties.getRecordTtl(),
+                false)
+                .block(Duration.ofSeconds(properties.getBlockInSeconds()));
+        Assert.notNull(updateDnsRecordWrapper, "updateDnsRecordWrapper is null!");
+        Assert.isTrue(updateDnsRecordWrapper.isSuccess(), "updateDnsRecordWrapper says unsuccessful!");
 
-
-
-        log.warn("Successfully changed IP from " + oldIp + " to " + newIp);
+        log.warn("Successfully updated DNS record content from " + oldIp + " to " + newIp);
     }
 
 }

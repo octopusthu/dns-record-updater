@@ -14,9 +14,8 @@ import reactor.netty.http.client.HttpClient;
 @Slf4j
 public class CloudflareDnsService {
     private final WebClient cloudflareWebClient;
-    private final CloudflareDnsServiceProperties properties;
 
-    public CloudflareDnsService(WebClient.Builder webClientBuilder, CloudflareDnsServiceProperties properties) {
+    public CloudflareDnsService(WebClient.Builder webClientBuilder) {
         HttpClient httpClient = HttpClient.create()
                 .tcpConfiguration(client ->
                         client.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000));
@@ -24,29 +23,24 @@ public class CloudflareDnsService {
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .baseUrl("https://api.cloudflare.com/client/v4/")
                 .build();
-
-        this.properties = properties;
     }
 
-    public Mono<CloudflareApiResponse> dnsRecordDetails() {
+    public Mono<CloudflareApiResponse> dnsRecordDetails(String bearerToken, String zoneId, String id) {
         return this.cloudflareWebClient.get()
-                .uri("zones/{zone_identifier}/dns_records/{identifier}",
-                        properties.getZoneId(),
-                        properties.getRecordId())
+                .uri("zones/{zone_identifier}/dns_records/{identifier}", zoneId, id)
                 .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + properties.getBearerToken())
+                .header("Authorization", "Bearer " + bearerToken)
                 .retrieve()
                 .bodyToMono(CloudflareApiResponse.class);
     }
 
-    public Mono<CloudflareApiResponse> updateDnsRecord() {
+    public Mono<CloudflareApiResponse> updateDnsRecord(String bearerToken, String zoneId, String id, String type, String name, String content, int ttl, boolean proxied) {
         return this.cloudflareWebClient.put()
-                .uri("zones/{zone_identifier}/dns_records/{identifier}",
-                        properties.getZoneId(),
-                        properties.getRecordId())
+                .uri("zones/{zone_identifier}/dns_records/{identifier}", zoneId, id)
+                .header("Authorization", "Bearer " + bearerToken)
                 .contentType(MediaType.APPLICATION_JSON)
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + properties.getBearerToken())
+                .body(new CloudflareUpdateDnsRecordRequest(type, name, content, ttl, proxied),
+                        CloudflareUpdateDnsRecordRequest.class)
                 .retrieve()
                 .bodyToMono(CloudflareApiResponse.class);
     }

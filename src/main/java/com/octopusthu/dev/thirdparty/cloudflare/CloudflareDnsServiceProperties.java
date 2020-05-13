@@ -14,5 +14,5 @@ public class CloudflareDnsServiceProperties {
     private String recordId;
     private String recordType;
     private String recordName;
-    private String recordTtl;
+    private int recordTtl;
 }
