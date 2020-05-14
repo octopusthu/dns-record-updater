@@ -25,23 +25,22 @@ public class CloudflareDnsService {
                 .build();
     }
 
-    public Mono<CloudflareApiResponse> dnsRecordDetails(String bearerToken, String zoneId, String id) {
+    public Mono<CloudflareDnsRecordDetailsResponse> dnsRecordDetails(String bearerToken, String zoneId, String id) {
         return this.cloudflareWebClient.get()
                 .uri("zones/{zone_identifier}/dns_records/{identifier}", zoneId, id)
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + bearerToken)
                 .retrieve()
-                .bodyToMono(CloudflareApiResponse.class);
+                .bodyToMono(CloudflareDnsRecordDetailsResponse.class);
     }
 
-    public Mono<CloudflareApiResponse> updateDnsRecord(String bearerToken, String zoneId, String id, String type, String name, String content, int ttl, boolean proxied) {
+    public Mono<CloudflareUpdateDnsRecordResponse> updateDnsRecord(String bearerToken, String zoneId, String id, String type, String name, String content, int ttl, boolean proxied) {
         return this.cloudflareWebClient.put()
                 .uri("zones/{zone_identifier}/dns_records/{identifier}", zoneId, id)
                 .header("Authorization", "Bearer " + bearerToken)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new CloudflareUpdateDnsRecordRequest(type, name, content, ttl, proxied),
-                        CloudflareUpdateDnsRecordRequest.class)
+                .bodyValue(new CloudflareUpdateDnsRecordRequest(type, name, content, ttl, proxied))
                 .retrieve()
-                .bodyToMono(CloudflareApiResponse.class);
+                .bodyToMono(CloudflareUpdateDnsRecordResponse.class);
     }
 }

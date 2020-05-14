@@ -1,10 +1,7 @@
 package com.octopusthu.dev.net.dnsrecordupdater;
 
 import com.octopusthu.dev.net.NetworkingService;
-import com.octopusthu.dev.thirdparty.cloudflare.CloudflareApiResponse;
-import com.octopusthu.dev.thirdparty.cloudflare.CloudflareDnsRecordDetailsApiSubResponse;
-import com.octopusthu.dev.thirdparty.cloudflare.CloudflareDnsService;
-import com.octopusthu.dev.thirdparty.cloudflare.CloudflareDnsServiceProperties;
+import com.octopusthu.dev.thirdparty.cloudflare.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
@@ -49,32 +46,30 @@ public class DnsRecordUpdaterService {
           Fetch the old DNS record
          */
 
-        CloudflareApiResponse<?> dnsRecordDetailsWrapper = cloudflareDnsService.dnsRecordDetails(
+        CloudflareDnsRecordDetailsResponse dnsRecordDetails = cloudflareDnsService.dnsRecordDetails(
                 cloudflareDnsServiceProperties.getBearerToken(),
                 cloudflareDnsServiceProperties.getZoneId(),
                 cloudflareDnsServiceProperties.getRecordId())
                 .block(Duration.ofSeconds(properties.getBlockInSeconds()));
-        Assert.notNull(dnsRecordDetailsWrapper, "dnsRecordDetailsWrapper is null!");
-        Assert.isTrue(dnsRecordDetailsWrapper.isSuccess(), "dnsRecordDetailsWrapper says unsuccessful!");
+        Assert.notNull(dnsRecordDetails, "dnsRecordDetails is null!");
+        Assert.isTrue(dnsRecordDetails.isSuccess(), "dnsRecordDetails says unsuccessful!");
 
         /*
           Make sure the fetched DNS record is what we want
          */
 
-        CloudflareDnsRecordDetailsApiSubResponse dnsRecordDetails = (CloudflareDnsRecordDetailsApiSubResponse) dnsRecordDetailsWrapper.getResult();
-        String recordName = dnsRecordDetails.getName();
-        Assert.isTrue(
-                recordName.equals(cloudflareDnsServiceProperties.getRecordName()),
+        CloudflareDnsRecordDetailsResponse.Result dnsRecordDetailsResult = dnsRecordDetails.getResult();
+        String recordName = dnsRecordDetailsResult.getName();
+        Assert.isTrue(recordName.equals(cloudflareDnsServiceProperties.getRecordName()),
                 "Record name mismatches: " + recordName);
-        String recordType = dnsRecordDetails.getType();
-        Assert.isTrue(
-                recordType.equals(cloudflareDnsServiceProperties.getRecordType()),
+        String recordType = dnsRecordDetailsResult.getType();
+        Assert.isTrue(recordType.equals(cloudflareDnsServiceProperties.getRecordType()),
                 "Record type mismatches: " + recordType);
 
         /*
           See if the DNS record needs updating
          */
-        String oldIp = dnsRecordDetails.getContent();
+        String oldIp = dnsRecordDetailsResult.getContent();
         if (newIp.equals(oldIp)) {
             log.info("IP is unchanged: " + oldIp);
             return;
@@ -83,7 +78,7 @@ public class DnsRecordUpdaterService {
         /*
           Update DNS record with the new external IP
          */
-        CloudflareApiResponse<?> updateDnsRecordWrapper = cloudflareDnsService.updateDnsRecord(cloudflareDnsServiceProperties.getBearerToken(),
+        CloudflareUpdateDnsRecordResponse updateDnsRecord = cloudflareDnsService.updateDnsRecord(cloudflareDnsServiceProperties.getBearerToken(),
                 cloudflareDnsServiceProperties.getZoneId(),
                 cloudflareDnsServiceProperties.getRecordId(),
                 cloudflareDnsServiceProperties.getRecordType(),
@@ -92,8 +87,12 @@ public class DnsRecordUpdaterService {
                 cloudflareDnsServiceProperties.getRecordTtl(),
                 false)
                 .block(Duration.ofSeconds(properties.getBlockInSeconds()));
-        Assert.notNull(updateDnsRecordWrapper, "updateDnsRecordWrapper is null!");
-        Assert.isTrue(updateDnsRecordWrapper.isSuccess(), "updateDnsRecordWrapper says unsuccessful!");
+        Assert.notNull(updateDnsRecord, "updateDnsRecord is null!");
+        Assert.isTrue(updateDnsRecord.isSuccess(), "updateDnsRecord says unsuccessful!");
+
+        CloudflareDnsRecordDetailsResponse.Result updateDnsRecordResult = updateDnsRecord.getResult();
+        String updatedIp = updateDnsRecordResult.getContent();
+        Assert.isTrue(newIp.equals(updatedIp), "updatedIp mismatches: " + updatedIp);
 
         log.warn("Successfully updated DNS record content from " + oldIp + " to " + newIp);
     }
