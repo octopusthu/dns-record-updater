@@ -1,2 +1,12 @@
-**/resources/application-*.properties
+
+# maven
 /target
+
+# spring boot
+**/resources/application-*.properties
+
+# intellij
+.idea
+*.iws
+*.iml
+*.ipr
