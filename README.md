@@ -4,6 +4,10 @@ A scheduled job to routinely update DNS records with dynamic IPs.
 
 For personal use only for the time being.
 
+## Next Release `v1.1.0`
+
+- modules
+
 ## Build
 
 - Configure your Maven environment to [Authenticating to GitHub Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages)
