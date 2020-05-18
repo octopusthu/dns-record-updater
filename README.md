@@ -1,12 +1,15 @@
 # dns-record-updater
 
-A scheduled job to routinely update DNS records with dynamic IPs.
+A scheduled job to routinely update DNS records with local machine's public IP.
 
 For personal use only for the time being.
 
 ## Next Release `v1.1.0`
 
 - modules
+- performance
+  - fix possible memory leak
+  - consume less memory overall
 
 ## Build
 
