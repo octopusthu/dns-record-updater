@@ -10,6 +10,7 @@ For personal use only for the time being.
 - performance
   - fix possible memory leak
   - consume less memory overall
+- logging
 
 ## Build
 
