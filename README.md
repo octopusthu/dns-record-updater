@@ -6,11 +6,14 @@ For personal use only for the time being.
 
 ## Next Release `v1.1.0`
 
+- bug fixes
+  - ipv6
 - modules
 - performance
   - fix possible memory leak
   - consume less memory overall
-- logging
+- enhancements
+  - shorter logging messages
 
 ## Build
 
