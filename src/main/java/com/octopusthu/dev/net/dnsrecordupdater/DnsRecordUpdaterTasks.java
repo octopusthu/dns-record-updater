@@ -26,7 +26,7 @@ public class DnsRecordUpdaterTasks {
         try {
             service.updateDnsRecord();
         } catch (Exception e) {
-            log.warn("Error updating DNS record!", e);
+            log.error("Error updating DNS record:" + e.getMessage());
         }
     }
 

@@ -14,6 +14,7 @@ For personal use only for the time being.
   - consume less memory overall
 - enhancements
   - shorter logging messages
+- other minor updates
 
 ## Build
 
