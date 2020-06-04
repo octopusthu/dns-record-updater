@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class Ifconfig {
     private String ip;
-    private int ip_decimal;
+    private long ip_decimal;
     private String country;
     private String country_iso;
     private String region_name;
