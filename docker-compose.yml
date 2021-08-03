@@ -1,0 +1,8 @@
+version: "3"
+services:
+    dns-record-updater:
+        image: octopusthu/dns-record-updater:latest
+        env_file:
+            - application.properties.env
+        restart: always
+        container_name: dns-record-updater

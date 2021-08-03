@@ -1,54 +1,54 @@
 {
-  "properties": [
-    {
-      "name": "dns-record-updater.ipinfo-token",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.ipinfo-token."
-    },
-    {
-      "name": "dns-record-updater.tasks.enabled",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.tasks.enabled."
-    },
-    {
-      "name": "dns-record-updater.tasks.cron",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.tasks.cron."
-    },
-    {
-      "name": "dns-record-updater.net.block-in-seconds",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.net.block-in-seconds."
-    },
-    {
-      "name": "dns-record-updater.cloudflare.bearer-token",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.cloudflare.bearer-token."
-    },
-    {
-      "name": "dns-record-updater.cloudflare.zone-id",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.cloudflare.zone-id."
-    },
-    {
-      "name": "dns-record-updater.cloudflare.record-id",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.cloudflare.record-id."
-    },
-    {
-      "name": "dns-record-updater.cloudflare.record-name",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.cloudflare.record-name."
-    },
-    {
-      "name": "dns-record-updater.cloudflare.record-type",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.cloudflare.record-type."
-    },
-    {
-      "name": "dns-record-updater.cloudflare.record-ttl",
-      "type": "java.lang.String",
-      "description": "Description for dns-record-updater.cloudflare.record-ttl."
-    }
-  ]
+    "properties": [
+        {
+            "name": "dns-record-updater.ipinfo-token",
+            "type": "java.lang.String",
+            "description": "Description for dns-record-updater.ipinfo-token."
+        },
+        {
+            "name": "dns-record-updater.tasks.enabled",
+            "type": "java.lang.Boolean",
+            "description": "Description for dns-record-updater.tasks.enabled."
+        },
+        {
+            "name": "dns-record-updater.tasks.cron",
+            "type": "java.lang.String",
+            "description": "Description for dns-record-updater.tasks.cron."
+        },
+        {
+            "name": "dns-record-updater.net.block-in-seconds",
+            "type": "java.lang.Integer",
+            "description": "Description for dns-record-updater.net.block-in-seconds."
+        },
+        {
+            "name": "dns-record-updater.cloudflare.bearer-token",
+            "type": "java.lang.String",
+            "description": "Description for dns-record-updater.cloudflare.bearer-token."
+        },
+        {
+            "name": "dns-record-updater.cloudflare.zone-id",
+            "type": "java.lang.String",
+            "description": "Description for dns-record-updater.cloudflare.zone-id."
+        },
+        {
+            "name": "dns-record-updater.cloudflare.record-id",
+            "type": "java.lang.String",
+            "description": "Description for dns-record-updater.cloudflare.record-id."
+        },
+        {
+            "name": "dns-record-updater.cloudflare.record-name",
+            "type": "java.lang.String",
+            "description": "Description for dns-record-updater.cloudflare.record-name."
+        },
+        {
+            "name": "dns-record-updater.cloudflare.record-type",
+            "type": "java.lang.String",
+            "description": "Description for dns-record-updater.cloudflare.record-type."
+        },
+        {
+            "name": "dns-record-updater.cloudflare.record-ttl",
+            "type": "java.lang.Integer",
+            "description": "Description for dns-record-updater.cloudflare.record-ttl."
+        }
+    ]
 }

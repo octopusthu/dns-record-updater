@@ -6,6 +6,8 @@ For personal use only for the time being.
 
 ## Next Release `v1.1.0`
 
+- Add Docker support
+
 - bug fixes
   - ipv6
 - modules
