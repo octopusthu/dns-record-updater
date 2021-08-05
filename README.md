@@ -11,6 +11,7 @@ For personal use only for the time being.
 - Polish Spring Configurations
 - Refactor core interfaces
 
+- CI/CD
 - bug fixes
   - ipv6
 - performance
