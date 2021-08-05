@@ -1,7 +1,7 @@
 package com.octopusthu.dev.net.dnsrecordupdater;
 
-import com.octopusthu.dev.net.NetworkingService;
-import com.octopusthu.dev.thirdparty.cloudflare.*;
+import com.octopusthu.dev.net.InetAddressService;
+import com.octopusthu.dev.net.providers.cloudflare.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,19 +16,19 @@ import java.net.InetAddress;
 @RestController
 @Slf4j
 public class DnsRecordUpdaterApiController {
-    private final NetworkingService networkingService;
+    private final InetAddressService inetAddressService;
     private final CloudflareDnsService cloudflareDnsService;
     private final CloudflareDnsServiceProperties cloudflareDnsServiceProperties;
 
-    public DnsRecordUpdaterApiController(NetworkingService networkingService, CloudflareDnsService cloudflareDnsService, CloudflareDnsServiceProperties cloudflareDnsServiceProperties) {
-        this.networkingService = networkingService;
+    public DnsRecordUpdaterApiController(InetAddressService inetAddressService, CloudflareDnsService cloudflareDnsService, CloudflareDnsServiceProperties cloudflareDnsServiceProperties) {
+        this.inetAddressService = inetAddressService;
         this.cloudflareDnsService = cloudflareDnsService;
         this.cloudflareDnsServiceProperties = cloudflareDnsServiceProperties;
     }
 
     @GetMapping("/api/get-external-ip")
     public Mono<InetAddress> getExternalIp() throws Exception {
-        return networkingService.getExternalIp();
+        return inetAddressService.getExternalIp();
     }
 
     @GetMapping("/api/dns-record-details")

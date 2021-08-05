@@ -7,11 +7,14 @@ For personal use only for the time being.
 ## Next Release `v1.1.0`
 
 - Add Docker support
+- Change default IP provider to [https://www.ipify.org/](https://www.ipify.org/)
 
 - Polish Spring Configurations
 - Refactor core interfaces
 
+- Add unit tests
 - CI/CD
+
 - bug fixes
   - ipv6
 - performance

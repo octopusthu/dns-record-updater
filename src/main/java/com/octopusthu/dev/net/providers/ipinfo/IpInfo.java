@@ -1,4 +1,4 @@
-package com.octopusthu.dev.thirdparty.ipinfo;
+package com.octopusthu.dev.net.providers.ipinfo;
 
 import lombok.Data;
 

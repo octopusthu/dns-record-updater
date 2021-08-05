@@ -1,6 +1,6 @@
-package com.octopusthu.dev.net;
+package com.octopusthu.dev.net.providers.ifconfigco;
 
-import com.octopusthu.dev.thirdparty.ifconfigco.Ifconfig;
+import com.octopusthu.dev.net.InetAddressService;
 import io.netty.channel.ChannelOption;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -13,11 +13,11 @@ import java.net.UnknownHostException;
 /**
  * @author ZHANG Yu
  */
-public class DefaultNetworkingServiceImpl implements NetworkingService {
+public class IpConfigCoInetAddressService implements InetAddressService {
 
     private final WebClient ipConfigMeWebClient;
 
-    public DefaultNetworkingServiceImpl(WebClient.Builder webClientBuilder) {
+    public IpConfigCoInetAddressService(WebClient.Builder webClientBuilder) {
         HttpClient httpClient = HttpClient.create()
                 .tcpConfiguration(client ->
                         client.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000));

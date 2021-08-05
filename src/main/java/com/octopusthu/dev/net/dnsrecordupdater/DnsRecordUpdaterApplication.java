@@ -1,9 +1,9 @@
 package com.octopusthu.dev.net.dnsrecordupdater;
 
-import com.octopusthu.dev.net.DefaultNetworkingServiceImpl;
-import com.octopusthu.dev.net.NetworkingService;
-import com.octopusthu.dev.thirdparty.cloudflare.CloudflareDnsService;
-import com.octopusthu.dev.thirdparty.cloudflare.CloudflareDnsServiceProperties;
+import com.octopusthu.dev.net.InetAddressService;
+import com.octopusthu.dev.net.providers.cloudflare.CloudflareDnsService;
+import com.octopusthu.dev.net.providers.cloudflare.CloudflareDnsServiceProperties;
+import com.octopusthu.dev.net.providers.ipify.IpifyInetAddressService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -47,8 +47,8 @@ public class DnsRecordUpdaterApplication {
     }
 
     @Bean
-    NetworkingService networkingService() {
-        return new DefaultNetworkingServiceImpl(this.webClientBuilder);
+    InetAddressService networkingService() {
+        return new IpifyInetAddressService(this.webClientBuilder);
     }
 
     @Bean

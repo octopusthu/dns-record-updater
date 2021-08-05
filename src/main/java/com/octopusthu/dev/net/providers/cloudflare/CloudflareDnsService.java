@@ -1,4 +1,4 @@
-package com.octopusthu.dev.thirdparty.cloudflare;
+package com.octopusthu.dev.net.providers.cloudflare;
 
 import io.netty.channel.ChannelOption;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,5 @@
-package com.octopusthu.dev.net;
+package com.octopusthu.dev.net.providers.ipinfo;
 
-import com.octopusthu.dev.thirdparty.ipinfo.IpInfo;
 import io.netty.channel.ChannelOption;
 import org.springframework.core.env.Environment;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;

@@ -1,4 +1,4 @@
-package com.octopusthu.dev.thirdparty.cloudflare;
+package com.octopusthu.dev.net.providers.cloudflare;
 
 import lombok.Getter;
 import lombok.Setter;

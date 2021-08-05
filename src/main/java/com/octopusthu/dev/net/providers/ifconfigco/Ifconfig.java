@@ -1,4 +1,4 @@
-package com.octopusthu.dev.thirdparty.ifconfigco;
+package com.octopusthu.dev.net.providers.ifconfigco;
 
 import lombok.Data;
 

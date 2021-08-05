@@ -1,7 +1,7 @@
 package com.octopusthu.dev.net.dnsrecordupdater;
 
-import com.octopusthu.dev.net.NetworkingService;
-import com.octopusthu.dev.thirdparty.cloudflare.*;
+import com.octopusthu.dev.net.InetAddressService;
+import com.octopusthu.dev.net.providers.cloudflare.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
@@ -14,13 +14,13 @@ import java.time.Duration;
 @Slf4j
 public class DnsRecordUpdaterService {
     private final DnsRecordUpdaterProperties properties;
-    private final NetworkingService networkingService;
+    private final InetAddressService inetAddressService;
     private final CloudflareDnsService cloudflareDnsService;
     private final CloudflareDnsServiceProperties cloudflareDnsServiceProperties;
 
-    public DnsRecordUpdaterService(DnsRecordUpdaterProperties properties, NetworkingService networkingService, CloudflareDnsService cloudflareDnsService, CloudflareDnsServiceProperties cloudflareDnsServiceProperties) {
+    public DnsRecordUpdaterService(DnsRecordUpdaterProperties properties, InetAddressService inetAddressService, CloudflareDnsService cloudflareDnsService, CloudflareDnsServiceProperties cloudflareDnsServiceProperties) {
         this.properties = properties;
-        this.networkingService = networkingService;
+        this.inetAddressService = inetAddressService;
         this.cloudflareDnsService = cloudflareDnsService;
         this.cloudflareDnsServiceProperties = cloudflareDnsServiceProperties;
     }
@@ -31,7 +31,7 @@ public class DnsRecordUpdaterService {
           Get the current external IP
          */
 
-        InetAddress externalIp = networkingService.getExternalIp()
+        InetAddress externalIp = inetAddressService.getExternalIp()
                 .block(Duration.ofSeconds(properties.getBlockInSeconds()));
         Assert.notNull(externalIp, "externalIp is null!");
 
