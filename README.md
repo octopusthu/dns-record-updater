@@ -8,15 +8,16 @@ For personal use only for the time being.
 
 - Add Docker support
 
+- Polish Spring Configurations
+- Refactor core interfaces
+
 - bug fixes
   - ipv6
-- modules
 - performance
   - fix possible memory leak
   - consume less memory overall
 - enhancements
   - shorter logging messages
-- other minor updates
 
 ## Build
 
