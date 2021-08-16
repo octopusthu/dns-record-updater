@@ -8,6 +8,7 @@ For personal use only for the time being.
 
 - Add Docker support
 - Change default IP provider to [https://www.ipify.org/](https://www.ipify.org/)
+- Upgrade to ejw-parent 1.4.2-SNAPSHOT
 
 - Polish Spring Configurations
 - Refactor core interfaces
